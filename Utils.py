@@ -17,14 +17,14 @@ from numpy import abs
 def FlickerGenerator(n,beta):
     re=zeros(n)
     im=zeros(n)
-    for i in range(1,(n/2)+1,1):
+    for i in range(1,(n//2)+1,1):
         mag = (double(i)+1.0)**(-beta/2.)*randn(1)
         pha = 2.*pi*randn(1)
         re[i] = mag*cos(pha)
         im[i] = mag*sin(pha)
         re[n-i] = re[i]
         im[n-i] = -im[i]
-    im[n/2]=0.0
+    im[n//2]=0.0
     res=ifft(re+complex(0,1)*im)
     return real(res)
 
@@ -46,7 +46,7 @@ def ARgenerator(a,sigma,n,burnin=0):
           for j in range(len(a)):
               s=s+a[j]*AR[i-j-1]
           AR=append(AR,s+w[i])
-    print 'Measured standard deviation: '+str(sqrt(var(w[burnin:])))
+    print('Measured standard deviation: '+str(sqrt(var(w[burnin:]))))
     return AR[burnin:]
 
 def ARMAgenerator(phi,theta,sigma,n,burnin=0):
@@ -71,7 +71,7 @@ def ARMAgenerator(phi,theta,sigma,n,burnin=0):
 
 from astroML.time_series import lomb_scargle
 def get_LS(t,y,yerr=None):
-	if yerr == None:
+	if yerr is None:
 		yerr = np.ones(len(y))
 
 	min_t = 2.0*np.mean(np.abs(np.diff(t))) # Nyquist freq
